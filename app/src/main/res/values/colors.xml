@@ -7,4 +7,25 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bg_text">#FFF5B8</color>
+    <color name="w_txt_et">#9BABB8</color>
+    <color name="bg_button">#00C4FF</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="bg_app">#3E86A0</color>
+    <color name="blue">#0A2191</color>
+    <color name="abu">#A4A8AA</color>
+    <color name="gradientstart">#37ebcc</color>
+    <color name="gradientend">#00aabe</color>
+    <color name="bg_login">#d7ff00</color>
+    <color name="bg_register">#003333</color>
+    <color name="orange">#FF9500</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorPurple">#983CFF</color>
+    <color name="colorPurpleT">#64983cff</color>
+    <color name="colorBlue">#2FB4FF</color>
+    <color name="colorBlueT">#642fb4ff</color>
+
+
 </resources>

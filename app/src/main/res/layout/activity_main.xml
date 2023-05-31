@@ -61,7 +61,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <ImageView
-                            android:id="@+id/btn_jadwal"
+                            android:id="@+id/btn_penjualan"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:src="@drawable/ic_keranjang"/>
@@ -87,7 +87,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <ImageView
-                            android:id="@+id/btn_info_jadwal"
+                            android:id="@+id/btn_pekerjaan"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:src="@drawable/ic_pekerjaan"/>
@@ -119,7 +119,7 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <ImageView
-                            android:id="@+id/btn_profil"
+                            android:id="@+id/btn_honor"
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:src="@drawable/ic_uangg"/>
