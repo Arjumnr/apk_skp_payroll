@@ -1,5 +1,6 @@
 package com.example.apk_skp_payroll;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,7 +22,7 @@ public class ActivityLogin extends AppCompatActivity {
     Button btnLogin;
     EditText Username;
     EditText Password;
-
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,9 @@ public class ActivityLogin extends AppCompatActivity {
             if (Username.getText().toString().isEmpty() || Password.getText().toString().isEmpty()) {
                 Toast.makeText(ActivityLogin.this, "Username/Password tidak boleh kosong", Toast.LENGTH_SHORT).show();
             }else{
+                progressDialog = new ProgressDialog(ActivityLogin.this);
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
                 login();
 
             }
@@ -46,10 +50,9 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     public void login(){
+
         String username = Username.getText().toString();
         String password = Password.getText().toString();
-
-
 
         UserService userService = APIservice.getRetrofit().create(UserService.class);
         Call<LoginResponse> call = userService.login(username, password);
@@ -74,19 +77,23 @@ public class ActivityLogin extends AppCompatActivity {
                                         .putString("id", String.valueOf(loginResponse.getData().getId()))
                                         .putString("name", loginResponse.getData().getName())
                                         .apply();
+                                progressDialog.dismiss();
                                 startActivity(new Intent(ActivityLogin.this, MainActivity.class));
                                 finish();
-
-
                             } else {
+                                progressDialog.dismiss();
                                 Toast.makeText(ActivityLogin.this, "Username/Password salah", Toast.LENGTH_SHORT).show();
                             }
                     }, 1000);
+                }else {
+                    progressDialog.dismiss();
+                    Toast.makeText(ActivityLogin.this, "Username/Password salah", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<LoginResponse> call, @NonNull Throwable t) {
+                progressDialog.dismiss();
                 Toast.makeText(ActivityLogin.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

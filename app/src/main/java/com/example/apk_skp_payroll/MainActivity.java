@@ -12,7 +12,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) { // onCreate() is called when the activity is first created.
         super.onCreate(savedInstanceState);
-        //cek apakah sudah login atau belum
 
         setContentView(R.layout.activity_main);
 
@@ -20,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView btnPenjualan = findViewById(R.id.btn_penjualan);
         ImageView btnPekejaan = findViewById(R.id.btn_pekerjaan);
         ImageView btnHonor = findViewById(R.id.btn_honor);
+
         String name = getSharedPreferences("user", MODE_PRIVATE)
                 .getString("name", null);
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             System.out.println("name xx null");
             TextView tName = findViewById(R.id.tx_name);
-            tName.setText("Halo " + name);
+            tName.setText(name);
         }
 
 

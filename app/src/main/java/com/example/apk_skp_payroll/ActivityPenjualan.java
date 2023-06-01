@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ public class ActivityPenjualan extends AppCompatActivity {
     EditText etDeskripsi;
     Button btnSimpan;
     TextView tes;
-
+    ImageView ic_back;
 
 
 
@@ -35,10 +36,16 @@ public class ActivityPenjualan extends AppCompatActivity {
         etNamaBarang = findViewById(R.id.nama_barang);
         etDeskripsi = findViewById(R.id.deskripsi);
         btnSimpan = findViewById(R.id.btn_simpan);
+        ic_back = findViewById(R.id.ic_back);
 
 
         String user_id = getSharedPreferences("user", MODE_PRIVATE)
                 .getString("id", null);
+
+
+        ic_back.setOnClickListener(view -> {
+            finish();
+        });
 
 
         btnSimpan.setOnClickListener(view -> {

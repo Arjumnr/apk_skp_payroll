@@ -2,7 +2,6 @@ package com.example.apk_skp_payroll.penjualan;
 
 public class PenjualanRequest {
 
-
     String nama_pelanggan;
     String nama_barang;
     String deskripsi;
