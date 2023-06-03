@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,12 +29,15 @@ import retrofit2.Response;
 
 public class ActivityPekerjaan extends AppCompatActivity {
 
-    EditText nama_pelanggan;
+    EditText etnama_pelanggan;
     Spinner spinner, spinner2;
     ImageView ic_back;
     Button btn_simpan;
     String jenis_id;
     ProgressDialog progressDialog;
+    TextView txt_antrian;
+    PekerjaanService pekerjaanService;
+    String user_id, nomor_antrian, nama_pelanggan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +48,13 @@ public class ActivityPekerjaan extends AppCompatActivity {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
-        nama_pelanggan = findViewById(R.id.nama_pelanggan);
-        nama_pelanggan.setEnabled(false);
+        etnama_pelanggan = findViewById(R.id.nama_pelanggan);
+        etnama_pelanggan.setEnabled(false);
         spinner = findViewById(R.id.spinner);
+        spinner2 = findViewById(R.id.spinner2);
+        txt_antrian = findViewById(R.id.tx_antrian);
 
-        String user_id = getSharedPreferences("user", MODE_PRIVATE)
+        user_id = getSharedPreferences("user", MODE_PRIVATE)
                 .getString("id", null);
 
         if (user_id == null){
@@ -70,8 +76,8 @@ public class ActivityPekerjaan extends AppCompatActivity {
 
         btn_simpan = findViewById(R.id.btn_simpan);
         btn_simpan.setOnClickListener(view -> {
-            if (spinner.getSelectedItem().toString().isEmpty() || spinner2.getSelectedItem().toString().isEmpty() || nama_pelanggan.getText().toString().isEmpty()){
-                Toast.makeText(ActivityPekerjaan.this, "Data tidak boleh kosong", Toast.LENGTH_SHORT).show();
+            if (etnama_pelanggan.getText().toString().isEmpty()){
+                Toast.makeText(this, "Tidak ada antrian", Toast.LENGTH_SHORT).show();
             }else{
                 doSimpan(user_id);
             }
@@ -83,21 +89,24 @@ public class ActivityPekerjaan extends AppCompatActivity {
 
     }
 
-    private void getAntrianKerja( ){
+    private void getAntrianKerja(){
 
-        PekerjaanService pekerjaanService = APIservice.getRetrofit().create(PekerjaanService.class);
+        pekerjaanService = APIservice.getRetrofit().create(PekerjaanService.class);
         Call<AntrianResponse> callAntrianKerja = pekerjaanService.getAntrianKerja();
         callAntrianKerja.enqueue( new Callback<AntrianResponse>() {
             @Override
             public void onResponse(Call<AntrianResponse> call, Response<AntrianResponse> response) {
-
                 if (response.isSuccessful()){
                     AntrianResponse antrianResponse = response.body();
                     String[] data = new String[antrianResponse.getData().size()];
+                    System.out.println("data antrian : " + antrianResponse.getData().size());
+                    if (antrianResponse.getData().size() == 0) {
+                        txt_antrian.setText("Tidak Ada Antrian");
+                    }
                     for (int i = 0; i < antrianResponse.getData().size(); i++){
                         data[i] = antrianResponse.getData().get(i).getNomor();
-                    }
 
+                    }
 
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(ActivityPekerjaan.this, android.R.layout.simple_spinner_item, data);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -107,39 +116,33 @@ public class ActivityPekerjaan extends AppCompatActivity {
                     spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                            nama_pelanggan.setText(antrianResponse.getData().get(i).getNama());
+                            nomor_antrian = antrianResponse.getData().get(i).getNomor();
+                            nama_pelanggan = antrianResponse.getData().get(i).getNama();
+                            etnama_pelanggan.setText(antrianResponse.getData().get(i).getNama());
 
                         }
-
-
 
                         @Override
                         public void onNothingSelected(AdapterView<?> adapterView) {
-
+                            Toast.makeText(ActivityPekerjaan.this, "Silahkan pilih antrian", Toast.LENGTH_SHORT).show();
                         }
                     });
 
-
-
-                }else {
-                    progressDialog.dismiss();
-
-                    System.out.println("error bosku");
                 }
             }
 
             @Override
             public void onFailure(Call<AntrianResponse> call, Throwable t) {
-                Log.d("response", "onFailure: " + t.getMessage());
-                progressDialog.dismiss();
+                Toast.makeText(ActivityPekerjaan.this, "Gagal mengambil data antrian", Toast.LENGTH_SHORT).show();
             }
+
+
         });
     }
 
     private void getJenisService(){
-
         spinner2 = findViewById(R.id.spinner2);
-        PekerjaanService pekerjaanService = APIservice.getRetrofit().create(PekerjaanService.class);
+             pekerjaanService = APIservice.getRetrofit().create(PekerjaanService.class);
         Call<JenisResponse> callJenisService = pekerjaanService.getJenisService();
         callJenisService.enqueue(new Callback<JenisResponse>() {
             @Override
@@ -149,7 +152,6 @@ public class ActivityPekerjaan extends AppCompatActivity {
                     String[] data = new String[jenisResponse.getData().size()];
                     for (int i = 0; i < jenisResponse.getData().size(); i++) {
                         data[i] = jenisResponse.getData().get(i).getNama_servis();
-
                     }
 
 
@@ -183,17 +185,21 @@ public class ActivityPekerjaan extends AppCompatActivity {
 
 
     private void doSimpan(String user_id){
+        System.out.println("user_id : " + user_id);
+        System.out.println("jenis_id : " + jenis_id);
+        System.out.println("nomor_antrian : " + nomor_antrian);
+        System.out.println("nama_pelanggan : " + nama_pelanggan);
         ProgressDialog progressDialog = new ProgressDialog(ActivityPekerjaan.this);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        String nomor_antrian = spinner.getSelectedItem().toString();
-        String nama_pelanggan = this.nama_pelanggan.getText().toString();
-        jenis_id = this.jenis_id;
+
+
+
         Time w_mulai = new Time(System.currentTimeMillis());
 
         PekerjaanRequest pekerjaanRequest = new PekerjaanRequest(nomor_antrian, nama_pelanggan, w_mulai.toString(), "0", jenis_id, user_id);
 
-        PekerjaanService pekerjaanService = APIservice.getRetrofit().create(PekerjaanService.class);
+         pekerjaanService = APIservice.getRetrofit().create(PekerjaanService.class);
 
         Call<PekerjaanResponse> callPekerjaan = pekerjaanService.postPekerjaan(pekerjaanRequest);
 

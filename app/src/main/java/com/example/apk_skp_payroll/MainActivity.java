@@ -2,6 +2,7 @@ package com.example.apk_skp_payroll;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,9 +16,10 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        ImageView btnLogout = findViewById(R.id.btn_logout);
+        Button btnLogout = findViewById(R.id.btn_logout);
         ImageView btnPenjualan = findViewById(R.id.btn_penjualan);
         ImageView btnPekejaan = findViewById(R.id.btn_pekerjaan);
+        ImageView btnListPekerjaan = findViewById(R.id.btnListPekerjaan);
         ImageView btnHonor = findViewById(R.id.btn_honor);
 
         String name = getSharedPreferences("user", MODE_PRIVATE)
@@ -34,17 +36,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        btnPenjualan.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ActivityPenjualan.class));
-        });
+        btnPenjualan.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ActivityPenjualan.class)));
 
-        btnPekejaan.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ActivityPekerjaan.class));
-        });
+        btnPekejaan.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ActivityPekerjaan.class)));
 
-        btnHonor.setOnClickListener(v -> {
-            startActivity(new Intent(MainActivity.this, ActivityHonor.class));
-        });
+        btnListPekerjaan.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ActivityListPekerjaan.class)));
+
+        btnHonor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ActivityHonor.class)));
 
         btnLogout.setOnClickListener(v -> {
 //            alert dialog

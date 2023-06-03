@@ -7,4 +7,7 @@ import retrofit2.http.POST;
 public interface PenjualanService {
     @POST("pembelian")
     Call<PenjualanResponse> postData(@Body PenjualanRequest penjualanRequest);
+
+
+
 }
