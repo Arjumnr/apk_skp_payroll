@@ -2,7 +2,12 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardCornerRadius="6dp"
+    card_view:cardElevation="3dp"
+    card_view:cardUseCompatPadding="true"
+    android:id="@id/card_honor"
     android:background="@drawable/gradient">
 
     <LinearLayout
@@ -11,7 +16,8 @@
         android:background="@drawable/gradient"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/card_honor">
 
 
         <LinearLayout
@@ -21,43 +27,23 @@
             android:padding="10dp"
             android:orientation="vertical">
 
-
-
             <TextView
-                android:id="@+id/nama"
+                android:id="@+id/id_jenis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
                 android:textSize="20sp"
-                android:text="Nama Dosen"/>
+                android:text="Jenis"/>
 
             <TextView
+                android:id="@+id/id_nama_pelanggan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:text="Tanggal Pertemuan" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:text="Waktu Pertemuan" />
+                android:text="Nama Pelanggan" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cardstatus"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:text="status"
-                android:gravity="right"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cardTgl"
-                android:text="tgl penginputan"
-                android:gravity="right"/>
+
 
         </LinearLayout>
 

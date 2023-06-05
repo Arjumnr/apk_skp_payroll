@@ -1,7 +1,11 @@
 package com.example.apk_skp_payroll;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,9 +41,15 @@ public class ActivityListPekerjaan extends AppCompatActivity {
     GetJenis getJenis;
     ModelData modelData;
     ListPekerjaanService listPekerjaanService;
+
+    ImageView icBack;
+
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_list_pekerjaan);
         user_id = getSharedPreferences("user", MODE_PRIVATE)
                 .getString("id", null);
@@ -47,10 +57,22 @@ public class ActivityListPekerjaan extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
+        icBack = findViewById(R.id.ic_back);
+        icBack.setOnClickListener(v -> {
+             finish();
+        });
+
+        progressDialog = new ProgressDialog(ActivityListPekerjaan.this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
 
         getListPekerjaan(getApplicationContext());
-
+        //jika tidak ada pekerjaan maka akan muncul text kosong
+        if (list.isEmpty()) {
+        //remove bg recycler view
+            recyclerView.setBackgroundResource(0);
+        }
     }
 
     private void getListPekerjaan(Context context) {
@@ -58,44 +80,48 @@ public class ActivityListPekerjaan extends AppCompatActivity {
         recyclerView.setAdapter(adapterListPekerjaan);
         listPekerjaanService = APIservice.getRetrofit().create(ListPekerjaanService.class);
         listPekerjaanRequest = new ListPekerjaanRequest();
-        //parse user_id
-//        user_id = listPekerjaanRequest.setId(Long.parseLong(user_id));
-        Call<ListPekerjaanResponse> call = listPekerjaanService.getListPekerjaan(Long.parseLong(user_id));
+        //        parse user_id
+        listPekerjaanRequest.setId(Long.parseLong(user_id));
+        Call<ListPekerjaanResponse> call = listPekerjaanService.getListPekerjaan(listPekerjaanRequest.getId());
+        Log.e("TAG", "getListPekerjaan: "+call.request().url() );
         call.enqueue(new Callback<ListPekerjaanResponse>() {
             @Override
             public void onResponse(Call<ListPekerjaanResponse> call, Response<ListPekerjaanResponse> response) {
-                System.out.println("Data : "+response.body());
                 if (response.isSuccessful()){
                     listPekerjaanResponse = response.body();
-                    System.out.println("Data : "+listPekerjaanResponse.isStatus());
-//                    if (listPekerjaanResponse.isStatus()){
-//                        System.out.println("Data : "+listPekerjaanResponse.getData());
-////                        for (int i = 0; i < listPekerjaanResponse.getData().size(); i++) {
-////                            antrian = listPekerjaanResponse.getData().get(i).getAntrian();
-////                            getJenis = listPekerjaanResponse.getData().get(i).getGetJenis();
-////                            modelData = new ModelData();
-////                            modelData.setNama_pelanggan(listPekerjaanResponse.getData().get(i).getNama_pelanggan());
-////                            modelData.setNama_jenis_pekerjaan(getJenis.getNama_jenis_pekerjaan());
-////                            modelData.setNomor_antrian(antrian.getNomor_antrian());
-////                            modelData.setWaktu_mulai(listPekerjaanResponse.getData().get(i).getWaktu_mulai());
-////                            modelData.setWaktu_selesai(listPekerjaanResponse.getData().get(i).getWaktu_selesai());
-////                            modelData.setTotal_harga(listPekerjaanResponse.getData().get(i).getTotal_harga());
-////                            modelData.setKeterangan(listPekerjaanResponse.getData().get(i).getKeterangan());
-////                            list.add(modelData);
-////                        }
-//
-//                    }
+                    if (listPekerjaanResponse.isStatus()){
+                        progressDialog.dismiss();
+                        list = listPekerjaanResponse.getData();
+                        for (int i = 0; i < list.size(); i++) {
+                            modelData = new ModelData();
+                            Log.e("TAG", "onResponse: "+modelData.getNama_pelanggan() );
+
+                            modelData.setNomor_antrian(modelData.getNomor_antrian());
+                            modelData.setNama_pelanggan(modelData.getNama_pelanggan());
+                            modelData.setGet_jenis(modelData.getGet_jenis());
+                            modelData.setAntrian(modelData.getAntrian());
+                            modelData.setAntrian(modelData.getAntrian());
+
+                            adapterListPekerjaan = new AdapterListPekerjaan(list, context);
+                            recyclerView.setAdapter(adapterListPekerjaan);
+                        }
+
+                    }else {
+                        Log.e("TAG", "onResponse: "+listPekerjaanResponse.getMessage() );
+                        progressDialog.dismiss();
+                    }
+                }else {
+                    progressDialog.dismiss();
+                    Log.e("TAG", "onResponse: " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<ListPekerjaanResponse> call, Throwable t) {
-                System.out.println("Error : "+t.getMessage());
+                progressDialog.dismiss();
+                Log.e("TAG", "onFailure: "+t.getMessage() );
             }
         });
+
     }
-
-
-
-
 }

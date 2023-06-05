@@ -1,11 +1,9 @@
-package com.example.apk_skp_payroll.list_pekerjaan;
+package com.example.apk_skp_payroll.honor;
 
-public class ModelData {
+public class Servis {
+
     private long id;
     private String nomor_antrian;
-    private String nama_pelanggan;
-    private String w_mulai;
-    private String w_selesai;
 
     public long getId() {
         return id;
@@ -79,27 +77,12 @@ public class ModelData {
         this.updated_at = updated_at;
     }
 
-    public Antrian getAntrian() {
-        return antrian;
-    }
-
-    public void setAntrian(Antrian antrian) {
-        this.antrian = antrian;
-    }
-
-    public GetJenis getGet_jenis() {
-        return get_jenis;
-    }
-
-    public void setGet_jenis(GetJenis get_jenis) {
-        this.get_jenis = get_jenis;
-    }
-
+    private String nama_pelanggan;
+    private String w_mulai;
+    private String w_selesai;
     private String jenis_id;
     private String user_id;
     private String created_at;
     private String updated_at;
-    private Antrian antrian;
-    private GetJenis get_jenis;
 
 }

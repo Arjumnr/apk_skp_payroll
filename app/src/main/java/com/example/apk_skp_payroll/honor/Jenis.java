@@ -1,6 +1,7 @@
-package com.example.apk_skp_payroll.list_pekerjaan;
+package com.example.apk_skp_payroll.honor;
 
-public class GetJenis {
+public class Jenis {
+
     public int getId() {
         return id;
     }
@@ -46,7 +47,4 @@ public class GetJenis {
     private String nama_servis;
     private String created_at;
     private String updated_at;
-
-
-
 }

@@ -1,14 +1,13 @@
 package com.example.apk_skp_payroll.list_pekerjaan;
 
 public class Antrian {
-    private long id;
-    private String nama;
+    private int id;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -36,35 +35,29 @@ public class Antrian {
         this.status = status;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public String getUpdated_at() {
+        return updated_at;
     }
 
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 
+    private String nama;
     private String nomor;
     private String status;
-    private String createdAt;
-    private String updatedAt;
+    private String created_at;
+    private String updated_at;
 
-    public Antrian(long id, String nama, String nomor, String status, String createdAt, String updatedAt) {
-        this.id = id;
-        this.nama = nama;
-        this.nomor = nomor;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
+
 
 
 }

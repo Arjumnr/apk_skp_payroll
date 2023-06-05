@@ -2,37 +2,71 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     card_view:cardCornerRadius="6dp"
     card_view:cardElevation="3dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardUseCompatPadding="true"
+    android:id="@+id/id_card_list_pekerjaan">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:padding="5dp">
 
-        <!-- TextView Nama Mahasiwa -->
-        <TextView
-            android:id="@+id/tv_nomor_antrian"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/thumb"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_pekerjaan"/>
 
-        <!-- TextView Npm Mahasiswa -->
-        <TextView
-            android:id="@+id/tv_nama_pelanggan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <!-- TextView NoHp Mahasiswa -->
-        <TextView
-            android:id="@+id/tv_servis"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_nomor_antrian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_nama_pelanggan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tv_servis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_servis"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/id_selesai"
+                    android:layout_width="100sp"
+                    android:layout_height="46sp"
+                    android:layout_marginLeft="16sp"
+                    android:layout_marginRight="16sp"
+                    android:text="Selesai"
+                    android:background="#E91E63"
+                    android:layout_gravity="center"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

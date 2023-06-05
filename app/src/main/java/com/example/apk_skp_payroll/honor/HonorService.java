@@ -1,10 +1,10 @@
 package com.example.apk_skp_payroll.honor;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 public interface HonorService {
-    @POST("add-honor")
-    Call<HonorResponse> postData(@Body HonorRequest honorRequest);
+    @GET("get-honor/{id}")
+    Call<HonorResponse> getHonor(@Path("id") long id);
 }

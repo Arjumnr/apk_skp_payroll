@@ -16,6 +16,9 @@
         android:layout_gravity="left"
         app:tint="@color/white" />
 
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +34,8 @@
         android:scrollbarThumbVertical="@color/colorPrimary"
         android:scrollbarSize="10dp"
         />
+
+
 
 
 
