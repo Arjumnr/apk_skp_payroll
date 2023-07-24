@@ -5,6 +5,24 @@ import java.util.List;
 public class ModelDataHonor {
 
     private long id;
+    private String user_id;
+    private String servis_id;
+    private String penjualan_id;
+    private String created_at;
+    private String updated_at;
+    private Penjualan penjualan;
+    private Servis servis;
+
+    public List<Barang> getBarang() {
+        return barang;
+    }
+
+    public void setBarang(List<Barang> barang) {
+        this.barang = barang;
+    }
+
+    private List<Barang> barang;
+
 
     public long getId() {
         return id;
@@ -70,13 +88,12 @@ public class ModelDataHonor {
         this.servis = servis;
     }
 
-    private String user_id;
-    private String servis_id;
-    private String penjualan_id;
-    private String created_at;
-    private String updated_at;
-    private Penjualan penjualan;
-    private Servis servis;
+    
+
+
+
+
+
 
     public Integer getTotal_servis() {
         return total_servis;
@@ -107,13 +124,4 @@ public class ModelDataHonor {
     private Integer total_honor;
 
 
-    public List<Jenis> getJenis() {
-        return jenis;
-    }
-
-    public void setJenis(List<Jenis> jenis) {
-        this.jenis = jenis;
-    }
-
-    private List<Jenis> jenis;
 }

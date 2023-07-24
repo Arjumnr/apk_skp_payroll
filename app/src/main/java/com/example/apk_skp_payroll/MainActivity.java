@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                                 .clear()
                                 .apply();
                         startActivity(new Intent(MainActivity.this, ActivityLogin.class));
+                        finish();
                     })
                     .setNegativeButton("Tidak", null)
                     .show();

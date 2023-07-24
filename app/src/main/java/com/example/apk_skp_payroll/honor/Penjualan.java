@@ -19,11 +19,11 @@ public class Penjualan {
     }
 
     public String getNama_barang() {
-        return nama_barang;
+        return barang_id;
     }
 
     public void setNama_barang(String nama_barang) {
-        this.nama_barang = nama_barang;
+        this.barang_id = nama_barang;
     }
 
     public String getDeskripsi() {
@@ -60,7 +60,7 @@ public class Penjualan {
 
     private int id;
     private String nama_pelanggan;
-    private String nama_barang;
+    private String barang_id;
     private String deskripsi;
     private String user_id;
     private String created_at;

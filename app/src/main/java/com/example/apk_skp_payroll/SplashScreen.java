@@ -20,9 +20,11 @@ public class SplashScreen extends AppCompatActivity {
                 if (getSharedPreferences("user", MODE_PRIVATE).getString("id", null) != null) {
                     //jika ada
                     startActivity(new android.content.Intent(SplashScreen.this, MainActivity.class));
+                    finish();
                 } else {
                     //jika tidak
                     startActivity(new android.content.Intent(SplashScreen.this, ActivityLogin.class));
+                    finish();
                 }
             }
         }, 2000);

@@ -3,13 +3,13 @@ package com.example.apk_skp_payroll.penjualan;
 public class PenjualanRequest {
 
     String nama_pelanggan;
-    String nama_barang;
+    String barang_id;
     String deskripsi;
     String user_id;
 
     public PenjualanRequest(String nama_pelanggan, String nama_barang, String deskripsi, String user_id) {
         this.nama_pelanggan = nama_pelanggan;
-        this.nama_barang = nama_barang;
+        this.barang_id = nama_barang;
         this.deskripsi = deskripsi;
         this.user_id = user_id;
     }
@@ -21,10 +21,10 @@ public class PenjualanRequest {
         this.nama_pelanggan = nama_pelanggan;
     }
     public String getNama_barang() {
-        return nama_barang;
+        return barang_id;
     }
     public void setNama_barang(String nama_barang) {
-        this.nama_barang = nama_barang;
+        this.barang_id = nama_barang;
     }
     public String getDeskripsi() {
         return deskripsi;

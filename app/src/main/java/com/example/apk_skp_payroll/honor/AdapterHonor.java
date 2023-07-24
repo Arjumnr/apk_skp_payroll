@@ -35,13 +35,20 @@ public class AdapterHonor extends RecyclerView.Adapter<AdapterHonor.ViewHolder> 
     public void onBindViewHolder(@NonNull AdapterHonor.ViewHolder holder, int position) {
         ModelDataHonor modelDataHonor = modelDataList.get( position );
 
-
         if (modelDataHonor.getPenjualan() == null){
             holder.tvJenis.setText( "Jenis : Servis"  );
             holder.tvNamaPelanggan.setText( "Nama Pelanggan : " + modelDataHonor.getServis().getNama_pelanggan() );
+            holder.tvNamaBarang.setText("" );
+            holder.tvHargaBarang.setText( "");
         } else {
+            //add nama barang
+
             holder.tvJenis.setText( "Jenis : Penjualan"  );
             holder.tvNamaPelanggan.setText( "Nama Pelanggan : " + modelDataHonor.getPenjualan().getNama_pelanggan() );
+            for (int i = 0; i < modelDataHonor.getBarang().size(); i++) {
+                holder.tvNamaBarang.setText( "Nama Barang : " + modelDataHonor.getBarang().get(i).getNama_barang() );
+                holder.tvHargaBarang.setText( "Harga Barang : " + modelDataHonor.getBarang().get(i).getHarga() );
+            }
         }
 
 
@@ -55,12 +62,14 @@ public class AdapterHonor extends RecyclerView.Adapter<AdapterHonor.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvJenis, tvNamaPelanggan;
+        TextView tvJenis, tvNamaPelanggan, tvNamaBarang, tvHargaBarang;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvJenis = itemView.findViewById( R.id.id_jenis );
             tvNamaPelanggan = itemView.findViewById( R.id.id_nama_pelanggan );
+            tvNamaBarang = itemView.findViewById( R.id.id_nama_barang );
+            tvHargaBarang = itemView.findViewById( R.id.id_harga_barang );
 
         }
     }

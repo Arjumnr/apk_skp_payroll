@@ -18,6 +18,7 @@ import com.example.apk_skp_payroll.honor.HonorService;
 import com.example.apk_skp_payroll.honor.ModelDataHonor;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,7 +41,8 @@ public class ActivityHonor extends AppCompatActivity {
     ImageView icBack;
     ProgressDialog progressDialog;
 
-    TextView total_servis, total_honor, total_penjualan;
+    TextView total_servis, total_honor, total_penjualan, tanggal;
+    String tanggal_sekarang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,11 @@ public class ActivityHonor extends AppCompatActivity {
         total_servis = findViewById(R.id.id_total_servis);
         total_honor = findViewById(R.id.id_total_gaji);
         total_penjualan = findViewById(R.id.id_total_penjualan);
+        tanggal = findViewById(R.id.id_tanggal);
+
+       String tanggal_sekarang = getCurrentDate();
+       tanggal.setText(tanggal_sekarang);
+
 
         icBack.setOnClickListener(v -> {
             finish();
@@ -70,9 +77,15 @@ public class ActivityHonor extends AppCompatActivity {
         getHonor(getApplicationContext());
 
 
+    }
 
-
-
+    public String getCurrentDate(){
+        final Calendar c = Calendar.getInstance();
+        int year, month, day;
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DATE);
+        return day + "/" + (month+1) + "/" + year;
     }
 
     private void getHonor(Context context){
@@ -91,17 +104,20 @@ public class ActivityHonor extends AppCompatActivity {
             public void onResponse(Call<HonorResponse> call, Response<HonorResponse> response) {
                 if (response.isSuccessful()){
                    honorResponse = response.body();
-                   if (honorResponse.isStatus()){
+
+
+                    if (honorResponse.isStatus()){
                        modelDataList = honorResponse.getData();
                        adapterHonor = new AdapterHonor(modelDataList, context);
-                       Log.e("TAG", "modelDataList: "+modelDataList.size());
+                       Log.e("inimi", "modelDataList: "+modelDataList.size());
+                       System.out.println("modelDataList: "+modelDataList.size());
                        if (modelDataList.size() > 0){
                            for (int i = 0; i < modelDataList.size(); i++){
-                               Log.e("TAG", "modelDataList: "+modelDataList.get(i).getPenjualan());
-                               Log.e("TAG", "modelDataList: "+modelDataList.get(i).getUser_id());
+                               System.out.println("modelDataList: ");
                                modelDataHonor.setUser_id(modelDataList.get(i).getUser_id());
                                modelDataHonor.setPenjualan(modelDataList.get(i).getPenjualan());
                                modelDataHonor.setServis(modelDataList.get(i).getServis());
+                               modelDataHonor.setBarang(modelDataList.get(i).getBarang());
                                modelDataHonor.setTotal_servis(modelDataList.get(i).getTotal_servis());
                                modelDataHonor.setTotal_penjualan(modelDataList.get(i).getTotal_penjualan());
                                modelDataHonor.setTotal_honor(modelDataList.get(i).getTotal_honor());
