@@ -4,7 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +21,7 @@ import com.example.apk_skp_payroll.honor.HonorResponse;
 import com.example.apk_skp_payroll.honor.HonorService;
 import com.example.apk_skp_payroll.honor.ModelDataHonor;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -33,6 +38,8 @@ public class ActivityHonor extends AppCompatActivity {
     List<ModelDataHonor> modelDataList = new ArrayList<>();
     String user_id;
     ModelDataHonor modelDataHonor = new ModelDataHonor();
+    String[] months = {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+    Spinner spinner;
 
     HonorRequest honorRequest;
     HonorResponse honorResponse;
@@ -61,6 +68,12 @@ public class ActivityHonor extends AppCompatActivity {
         total_honor = findViewById(R.id.id_total_gaji);
         total_penjualan = findViewById(R.id.id_total_penjualan);
         tanggal = findViewById(R.id.id_tanggal);
+        spinner = findViewById(R.id.spinner_bulan);
+
+        spinner = findViewById(R.id.spinner_bulan);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, months);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
 
        String tanggal_sekarang = getCurrentDate();
        tanggal.setText(tanggal_sekarang);
@@ -75,6 +88,23 @@ public class ActivityHonor extends AppCompatActivity {
         progressDialog.show();
 
         getHonor(getApplicationContext());
+        spinner.setSelection(getCurrentMonthPosition());
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                String selectedMonth = (String) parentView.getItemAtPosition(position);
+                // Panggil metode untuk memfilter dan memperbarui data berdasarkan bulan yang dipilih
+                updateHonorData(selectedMonth);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                updateHonorData(bulanSekarang());
+
+
+            }
+        });
 
 
     }
@@ -88,6 +118,21 @@ public class ActivityHonor extends AppCompatActivity {
         return day + "/" + (month+1) + "/" + year;
     }
 
+    public String bulanSekarang(){
+        //kembalian nilainya itu januari dll
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMMM"); // 'MMMM' menghasilkan nama bulan dalam bahasa Inggris
+        String monthName = monthFormat.format(calendar.getTime());
+        System.out.println("Bulan saat ini: " + monthName);
+        return monthName;
+    }
+
+    private int getCurrentMonthPosition() {
+        Calendar calendar = Calendar.getInstance();
+        int currentMonth = calendar.get(Calendar.MONTH);
+        return currentMonth;
+    }
+
     private void getHonor(Context context){
         adapterHonor = new AdapterHonor(modelDataList, context);
         recyclerView.setAdapter(adapterHonor);
@@ -95,8 +140,14 @@ public class ActivityHonor extends AppCompatActivity {
 
         honorRequest = new HonorRequest();
         honorRequest.setId(Long.parseLong(user_id));
+        //spinner bulan
+        //jika spinner kosong kirim null
+        if (spinner.getSelectedItemPosition() == 0){
+            honorRequest.setBulan(bulanSekarang());
+        }
+        honorRequest.setBulan(spinner.getSelectedItem().toString());
 
-        Call<HonorResponse> call = honorService.getHonor(honorRequest.getId());
+        Call<HonorResponse> call = honorService.getHonor(honorRequest.getId(), honorRequest.getBulan());
         //cek url
         Log.e("TAG", "getHonor: "+call.request().url() );
         call.enqueue(new Callback<HonorResponse>() {
@@ -128,6 +179,12 @@ public class ActivityHonor extends AppCompatActivity {
                            modelDataHonor.setTotal_honor(0);
                             modelDataHonor.setTotal_penjualan(0);
                             modelDataHonor.setTotal_servis(0);
+                            //jngan tampilkan perulangan kosong
+                           adapterHonor = new AdapterHonor(modelDataList, context);
+                           recyclerView.setAdapter(adapterHonor);
+                           recyclerView.setBackgroundResource(0);
+
+
                        }
                    }
 
@@ -166,5 +223,17 @@ public class ActivityHonor extends AppCompatActivity {
         );
 
 
+    }
+
+    private void updateHonorData(String selectedMonth) {
+        progressDialog.show(); // Menampilkan progress dialog saat memuat ulang data
+
+        // Mengganti bulan yang dipilih dalam objek honorRequest
+
+            honorRequest.setBulan(selectedMonth);
+
+//        adapterHonor.setData(null);
+        // Memanggil kembali metode getHonor dengan bulan yang baru
+        getHonor(getApplicationContext());
     }
 }

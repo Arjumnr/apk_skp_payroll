@@ -23,6 +23,18 @@ public class AdapterHonor extends RecyclerView.Adapter<AdapterHonor.ViewHolder> 
         this.context = context;
     }
 
+    public void setData(List<ModelDataHonor> dataList) {
+//        modelDataList = dataList;
+//        notifyDataSetChanged();
+
+        if (dataList == null || dataList.isEmpty()) {
+            modelDataList = null;
+        } else {
+            modelDataList = dataList;
+        }
+        notifyDataSetChanged();
+    }
+
 
     @NonNull
     @Override
@@ -35,21 +47,41 @@ public class AdapterHonor extends RecyclerView.Adapter<AdapterHonor.ViewHolder> 
     public void onBindViewHolder(@NonNull AdapterHonor.ViewHolder holder, int position) {
         ModelDataHonor modelDataHonor = modelDataList.get( position );
 
-        if (modelDataHonor.getPenjualan() == null){
-            holder.tvJenis.setText( "Jenis : Servis"  );
-            holder.tvNamaPelanggan.setText( "Nama Pelanggan : " + modelDataHonor.getServis().getNama_pelanggan() );
-            holder.tvNamaBarang.setText("" );
-            holder.tvHargaBarang.setText( "");
+        if (modelDataHonor.getPenjualan() == null) {
+            holder.tvJenis.setText("Jenis : Servis");
+            holder.tvNamaPelanggan.setText("Nama Pelanggan : " + modelDataHonor.getServis().getNama_pelanggan());
+            holder.tvNamaBarang.setText("");
+            holder.tvHargaBarang.setText("");
         } else {
-            //add nama barang
+            holder.tvJenis.setText("Jenis : Penjualan");
+            holder.tvNamaPelanggan.setText("Nama Pelanggan : " + modelDataHonor.getPenjualan().getNama_pelanggan());
 
-            holder.tvJenis.setText( "Jenis : Penjualan"  );
-            holder.tvNamaPelanggan.setText( "Nama Pelanggan : " + modelDataHonor.getPenjualan().getNama_pelanggan() );
+            // Jika ada barang dalam penjualan, Anda dapat mengatur data barang yang sesuai
+            StringBuilder namaBarang = new StringBuilder();
+            StringBuilder hargaBarang = new StringBuilder();
             for (int i = 0; i < modelDataHonor.getBarang().size(); i++) {
-                holder.tvNamaBarang.setText( "Nama Barang : " + modelDataHonor.getBarang().get(i).getNama_barang() );
-                holder.tvHargaBarang.setText( "Harga Barang : " + modelDataHonor.getBarang().get(i).getHarga() );
+                namaBarang.append("Nama Barang : ").append(modelDataHonor.getBarang().get(i).getNama_barang()).append("\n");
+                hargaBarang.append("Harga Barang : ").append(modelDataHonor.getBarang().get(i).getHarga()).append("\n");
             }
+
+            holder.tvNamaBarang.setText(namaBarang.toString());
+            holder.tvHargaBarang.setText(hargaBarang.toString());
         }
+//        if (modelDataHonor.getPenjualan() == null){
+//            holder.tvJenis.setText( "Jenis : Servis"  );
+//            holder.tvNamaPelanggan.setText( "Nama Pelanggan : " + modelDataHonor.getServis().getNama_pelanggan() );
+//            holder.tvNamaBarang.setText("" );
+//            holder.tvHargaBarang.setText( "");
+//        } else {
+//            //add nama barang
+//
+//            holder.tvJenis.setText( "Jenis : Penjualan"  );
+//            holder.tvNamaPelanggan.setText( "Nama Pelanggan : " + modelDataHonor.getPenjualan().getNama_pelanggan() );
+//            for (int i = 0; i < modelDataHonor.getBarang().size(); i++) {
+//                holder.tvNamaBarang.setText( "Nama Barang : " + modelDataHonor.getBarang().get(i).getNama_barang() );
+//                holder.tvHargaBarang.setText( "Harga Barang : " + modelDataHonor.getBarang().get(i).getHarga() );
+//            }
+//        }
 
 
 

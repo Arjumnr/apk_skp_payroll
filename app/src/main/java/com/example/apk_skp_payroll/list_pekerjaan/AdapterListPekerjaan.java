@@ -23,6 +23,8 @@ public class AdapterListPekerjaan extends RecyclerView.Adapter<AdapterListPekerj
         List<ModelData> list;
     Context context;
 
+
+
     public AdapterListPekerjaan(List<ModelData> list, Context context) {
         System.out.println("AdapterListPekerjaan");
         this.list = list;
@@ -54,10 +56,7 @@ public class AdapterListPekerjaan extends RecyclerView.Adapter<AdapterListPekerj
 
         if (modelData.getAntrian() != null){
             if (modelData.getAntrian().getStatus().equals("proses")){
-
                 holder.btnSelesai.setVisibility(View.VISIBLE);
-
-
                 holder.btnSelesai.setOnClickListener(view -> {
                  ListPekerjaanService listPekerjaanService;
                  listPekerjaanService = APIservice.getRetrofit().create(ListPekerjaanService.class);

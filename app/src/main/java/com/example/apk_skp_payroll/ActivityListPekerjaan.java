@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +34,7 @@ public class ActivityListPekerjaan extends AppCompatActivity {
     String[] dataList;
     List<ModelData> list = new ArrayList<>();
     String user_id;
+    Spinner spinner;
 
     ListPekerjaanRequest listPekerjaanRequest;
     ListPekerjaanResponse listPekerjaanResponse;
@@ -58,6 +59,7 @@ public class ActivityListPekerjaan extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         icBack = findViewById(R.id.ic_back);
+        spinner = findViewById(R.id.spinner);
         icBack.setOnClickListener(v -> {
              finish();
         });
@@ -92,6 +94,7 @@ public class ActivityListPekerjaan extends AppCompatActivity {
                     if (listPekerjaanResponse.isStatus()){
                         progressDialog.dismiss();
                         list = listPekerjaanResponse.getData();
+
                         for (int i = 0; i < list.size(); i++) {
                             modelData = new ModelData();
                             Log.e("TAG", "onResponse: "+modelData.getNama_pelanggan() );
