@@ -6,8 +6,18 @@ public class ModelDataHonor {
 
     private long id;
     private String user_id;
-    private String servis_id;
     private String penjualan_id;
+    private String servis_id;
+
+    public String getHonor() {
+        return honor;
+    }
+
+    public void setHonor(String honor) {
+        this.honor = honor;
+    }
+
+    private String honor;
     private String created_at;
     private String updated_at;
     private Penjualan penjualan;

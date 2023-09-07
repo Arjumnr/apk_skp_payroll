@@ -48,7 +48,7 @@ public class ActivityHonor extends AppCompatActivity {
     ImageView icBack;
     ProgressDialog progressDialog;
 
-    TextView total_servis, total_honor, total_penjualan, tanggal;
+    TextView total_servis, total_honor, total_penjualan, tanggal, cretaed_at, honor;
     String tanggal_sekarang;
 
     @Override
@@ -69,6 +69,8 @@ public class ActivityHonor extends AppCompatActivity {
         total_penjualan = findViewById(R.id.id_total_penjualan);
         tanggal = findViewById(R.id.id_tanggal);
         spinner = findViewById(R.id.spinner_bulan);
+        honor = findViewById(R.id.id_honor);
+        cretaed_at = findViewById(R.id.id_created_at);
 
         spinner = findViewById(R.id.spinner_bulan);
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, months);
@@ -172,6 +174,9 @@ public class ActivityHonor extends AppCompatActivity {
                                modelDataHonor.setTotal_servis(modelDataList.get(i).getTotal_servis());
                                modelDataHonor.setTotal_penjualan(modelDataList.get(i).getTotal_penjualan());
                                modelDataHonor.setTotal_honor(modelDataList.get(i).getTotal_honor());
+                               modelDataHonor.setCreated_at(modelDataList.get(i).getCreated_at());
+                               modelDataHonor.setHonor(modelDataList.get(i).getHonor());
+
                                adapterHonor = new AdapterHonor(modelDataList, context);
                                recyclerView.setAdapter(adapterHonor);
                            }

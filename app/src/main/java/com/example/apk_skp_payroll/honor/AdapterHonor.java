@@ -49,23 +49,33 @@ public class AdapterHonor extends RecyclerView.Adapter<AdapterHonor.ViewHolder> 
 
         if (modelDataHonor.getPenjualan() == null) {
             holder.tvJenis.setText("Jenis : Servis");
-            holder.tvNamaPelanggan.setText("Nama Pelanggan : " + modelDataHonor.getServis().getNama_pelanggan());
+            holder.tvNamaPelanggan.setText("Pelanggan : " + modelDataHonor.getServis().getNama_pelanggan());
             holder.tvNamaBarang.setText("");
             holder.tvHargaBarang.setText("");
+            holder.tvCreated_at.setText(modelDataHonor.getServis().getCreated_at());
+            holder.tvHonor.setText("Honor : " + modelDataHonor.getHonor());
         } else {
             holder.tvJenis.setText("Jenis : Penjualan");
-            holder.tvNamaPelanggan.setText("Nama Pelanggan : " + modelDataHonor.getPenjualan().getNama_pelanggan());
+            holder.tvNamaPelanggan.setText("Pelanggan : " + modelDataHonor.getPenjualan().getNama_pelanggan());
+            holder.tvCreated_at.setText(modelDataHonor.getPenjualan().getCreated_at());
+            holder.tvHonor.setText("Honor : " + modelDataHonor.getHonor());
 
             // Jika ada barang dalam penjualan, Anda dapat mengatur data barang yang sesuai
             StringBuilder namaBarang = new StringBuilder();
             StringBuilder hargaBarang = new StringBuilder();
+            StringBuilder cretaed_at = new StringBuilder();
+            StringBuilder honor = new StringBuilder();
             for (int i = 0; i < modelDataHonor.getBarang().size(); i++) {
                 namaBarang.append("Nama Barang : ").append(modelDataHonor.getBarang().get(i).getNama_barang()).append("\n");
                 hargaBarang.append("Harga Barang : ").append(modelDataHonor.getBarang().get(i).getHarga()).append("\n");
+                cretaed_at.append(modelDataHonor.getCreated_at()).append("\n");
+                honor.append(modelDataHonor.getHonor()).append("\n");
             }
 
             holder.tvNamaBarang.setText(namaBarang.toString());
             holder.tvHargaBarang.setText(hargaBarang.toString());
+            holder.tvCreated_at.setText(cretaed_at.toString());
+            holder.tvHonor.setText("Honor : " + modelDataHonor.getHonor());
         }
 //        if (modelDataHonor.getPenjualan() == null){
 //            holder.tvJenis.setText( "Jenis : Servis"  );
@@ -94,7 +104,7 @@ public class AdapterHonor extends RecyclerView.Adapter<AdapterHonor.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvJenis, tvNamaPelanggan, tvNamaBarang, tvHargaBarang;
+        TextView tvJenis, tvNamaPelanggan, tvNamaBarang, tvHargaBarang, tvHonor, tvCreated_at;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,6 +112,8 @@ public class AdapterHonor extends RecyclerView.Adapter<AdapterHonor.ViewHolder> 
             tvNamaPelanggan = itemView.findViewById( R.id.id_nama_pelanggan );
             tvNamaBarang = itemView.findViewById( R.id.id_nama_barang );
             tvHargaBarang = itemView.findViewById( R.id.id_harga_barang );
+            tvCreated_at = itemView.findViewById( R.id.id_created_at );
+            tvHonor = itemView.findViewById( R.id.id_honor );
 
         }
     }
